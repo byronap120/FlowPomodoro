@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FlowPomodoro" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock_background_red" translatesAutoresizingMaskIntoConstraints="NO" id="ao0-D9-sb1">
+                                <rect key="frame" x="57" y="298" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="IwU-oN-q7S"/>
+                                    <constraint firstAttribute="width" constant="300" id="sVO-fG-61U"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock_background_grey" translatesAutoresizingMaskIntoConstraints="NO" id="ZE8-3F-kpg">
+                                <rect key="frame" x="57" y="298" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="2qi-Cl-433"/>
+                                    <constraint firstAttribute="height" constant="300" id="jHV-xX-5UT"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbK-ue-wPE">
+                                <rect key="frame" x="115" y="406" width="184" height="84"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="g9h-jf-bKl"/>
+                                    <constraint firstAttribute="width" constant="184" id="oB8-ae-OXs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="70"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nuD-nC-FBQ">
+                                <rect key="frame" x="169.5" y="655" width="75" height="75"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="4g3-PQ-Q84"/>
+                                    <constraint firstAttribute="height" constant="75" id="U12-bD-zMJ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="startTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8bT-oX-sTk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ZE8-3F-kpg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="08k-XP-6mT"/>
+                            <constraint firstItem="ao0-D9-sb1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5Af-g2-6RD"/>
+                            <constraint firstItem="nuD-nC-FBQ" firstAttribute="top" secondItem="ao0-D9-sb1" secondAttribute="bottom" constant="57" id="ShB-bF-sxc"/>
+                            <constraint firstItem="BbK-ue-wPE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SkJ-MD-z4O"/>
+                            <constraint firstItem="ZE8-3F-kpg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bxZ-3e-gRc"/>
+                            <constraint firstItem="ao0-D9-sb1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="exz-tE-fpm"/>
+                            <constraint firstItem="nuD-nC-FBQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fhE-Km-Ddh"/>
+                            <constraint firstItem="BbK-ue-wPE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="lRg-EW-pE6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="clockBackground" destination="ao0-D9-sb1" id="xcR-5w-pR3"/>
+                        <outlet property="clockDisplay" destination="BbK-ue-wPE" id="rHQ-5M-CRC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="clock_background_grey" width="500" height="500"/>
+        <image name="clock_background_red" width="500" height="500"/>
+    </resources>
+</document>
