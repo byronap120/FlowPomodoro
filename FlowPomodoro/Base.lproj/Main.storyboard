@@ -68,6 +68,7 @@
                     <connections>
                         <outlet property="clockBackground" destination="ao0-D9-sb1" id="xcR-5w-pR3"/>
                         <outlet property="clockDisplay" destination="BbK-ue-wPE" id="rHQ-5M-CRC"/>
+                        <outlet property="timerButton" destination="nuD-nC-FBQ" id="2fG-p5-bHv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -12,11 +12,14 @@ class ViewController: UIViewController {
     
     private var lastDate: Date?
     private var timeElapsedInSeconds: Int = 0
+    private var timerActive = false
     private let progressView = ProgressView()
     private var timerMode: TimerMode?
+    private var timer = Timer()
     
     @IBOutlet weak var clockBackground: UIImageView!
     @IBOutlet weak var clockDisplay: UILabel!
+    @IBOutlet weak var timerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,7 @@ class ViewController: UIViewController {
             timerMode = TimerMode(timer: TimerContants.restTime, currentMode: TimerContants.restMode)
         }
         
+        timerActive = false
         timeElapsedInSeconds = 0
         updateUITimer()
     }
@@ -77,14 +81,49 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startTimer(_ sender: Any) {
-        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            self.timeElapsedInSeconds += 1
-            self.updateUITimer()
-            if self.timeElapsedInSeconds >= self.timerMode!.timer {
-                timer.invalidate()
-                self.moveToNextMode()
+        if(timerActive) {
+            showAlertToUser()
+        } else {
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                self.timeElapsedInSeconds += 1
+                self.updateUITimer()
+                if self.timeElapsedInSeconds >= self.timerMode!.timer {
+                    timer.invalidate()
+                    self.moveToNextMode()
+                }
             }
+            timerActive = true
         }
+    }
+    
+    private func showAlertToUser(){
+        var title = ""
+        if(timerMode?.currentMode == TimerContants.focusMode) {
+            title = "Are you sure you want to cancel your focus time?"
+        } else {
+            title = "Are you sure you want to skip your rest time?"
+        }
+        
+        let alert = UIAlertController(title: title,
+                                      message: "",
+                                      preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Confirm",
+                                       style: .default) {
+                                        action in
+                                        self.confirmCancelTimer()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel)
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func confirmCancelTimer(){
+        timer.invalidate()
+        updateTimerMode(mode: TimerContants.focusMode)
     }
     
     private func moveToNextMode(){
@@ -112,9 +151,8 @@ class ViewController: UIViewController {
         print("Formated timer2-> \(formattedTime)")
     }
     
-    private func updateButtonConfiguration(){
+    private func updateButtonConfiguration() {
         
     }
-    
     
 }
