@@ -51,13 +51,23 @@
                                     <action selector="startTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8bT-oX-sTk"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Task Name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YSv-iR-9VL">
+                                <rect key="frame" x="0.0" y="213.5" width="414" height="24.5"/>
+                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" textContentType="name"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZE8-3F-kpg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="08k-XP-6mT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YSv-iR-9VL" secondAttribute="trailing" id="3x8-BU-5Wx"/>
                             <constraint firstItem="ao0-D9-sb1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5Af-g2-6RD"/>
+                            <constraint firstItem="YSv-iR-9VL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7OI-Tc-x08"/>
                             <constraint firstItem="nuD-nC-FBQ" firstAttribute="top" secondItem="ao0-D9-sb1" secondAttribute="bottom" constant="57" id="ShB-bF-sxc"/>
                             <constraint firstItem="BbK-ue-wPE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SkJ-MD-z4O"/>
+                            <constraint firstItem="ao0-D9-sb1" firstAttribute="top" secondItem="YSv-iR-9VL" secondAttribute="bottom" constant="60" id="Ue6-dQ-To7"/>
                             <constraint firstItem="ZE8-3F-kpg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bxZ-3e-gRc"/>
                             <constraint firstItem="ao0-D9-sb1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="exz-tE-fpm"/>
                             <constraint firstItem="nuD-nC-FBQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fhE-Km-Ddh"/>
@@ -68,6 +78,7 @@
                     <connections>
                         <outlet property="clockBackground" destination="ao0-D9-sb1" id="xcR-5w-pR3"/>
                         <outlet property="clockDisplay" destination="BbK-ue-wPE" id="rHQ-5M-CRC"/>
+                        <outlet property="taskNameTextField" destination="YSv-iR-9VL" id="aUo-hQ-cvx"/>
                         <outlet property="timerButton" destination="nuD-nC-FBQ" id="2fG-p5-bHv"/>
                     </connections>
                 </viewController>

@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var clockBackground: UIImageView!
     @IBOutlet weak var clockDisplay: UILabel!
     @IBOutlet weak var timerButton: UIButton!
+    @IBOutlet weak var taskNameTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,12 @@ class ViewController: UIViewController {
         intializeLifeCycleObservers()
         intializeProgressView()
         updateTimerMode(mode: TimerContants.focusMode)
+        edittingGesture()
+    }
+    
+    private func edittingGesture(){
+        let tap  = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     private func updateTimerMode(mode: Int){
@@ -38,6 +45,7 @@ class ViewController: UIViewController {
         
         timerActive = false
         timeElapsedInSeconds = 0
+        updateTimerTitle()
         updateUITimer()
     }
     
@@ -136,8 +144,9 @@ class ViewController: UIViewController {
     
     private func updateUITimer(){
         let currentTimer = self.timerMode!.timer
-        self.progressView.updateValues(currentAmount: CGFloat(self.timeElapsedInSeconds), totalAmount: CGFloat(currentTimer - self.timeElapsedInSeconds))
-        self.updateNumericTimerFrom(seconds: self.timeElapsedInSeconds)
+        progressView.updateValues(currentAmount: CGFloat(self.timeElapsedInSeconds), totalAmount: CGFloat(currentTimer - self.timeElapsedInSeconds))
+        updateNumericTimerFrom(seconds: self.timeElapsedInSeconds)
+        
     }
     
     private func updateNumericTimerFrom(seconds: Int){
@@ -153,6 +162,18 @@ class ViewController: UIViewController {
     
     private func updateButtonConfiguration() {
         
+    }
+    
+    private func updateTimerTitle(){
+        if(timerMode?.currentMode == TimerContants.focusMode) {
+            taskNameTextField.text = ""
+            taskNameTextField.isEnabled = true
+            taskNameTextField.attributedPlaceholder = NSAttributedString(string: "Add Task Name",
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)])
+        } else {
+            taskNameTextField.isEnabled = false
+            taskNameTextField.text = "REST TIME!"
+        }
     }
     
 }
