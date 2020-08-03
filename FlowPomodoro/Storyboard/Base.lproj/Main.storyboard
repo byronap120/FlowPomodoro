@@ -10,7 +10,8 @@
         <!--Navigation Controller-->
         <scene sceneID="Lfz-qz-VxW">
             <objects>
-                <navigationController id="kx9-FR-F82" sceneMemberID="viewController">
+                <navigationController modalPresentationStyle="fullScreen" id="kx9-FR-F82" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="CMQ-Bh-jiR"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="F55-fi-muF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -26,7 +27,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="vCe-qu-ctT">
             <objects>
-                <viewController id="s22-fd-1lz" customClass="SignInViewController" customModule="FlowPomodoro" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="s22-fd-1lz" customClass="SignInViewController" customModule="FlowPomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tw9-9Z-q9l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -164,11 +165,14 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhd-NQ-loL">
                                         <rect key="frame" x="0.0" y="0.0" width="187" height="40"/>
                                         <state key="normal" title="LogOut"/>
+                                        <connections>
+                                            <action selector="logOutUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bII-3R-xV6"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ge5-Xx-OwT">
                                         <rect key="frame" x="187" y="0.0" width="187" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -205,11 +209,12 @@
                         <outlet property="timerButton" destination="nuD-nC-FBQ" id="2fG-p5-bHv"/>
                         <outlet property="userInfoView" destination="s3M-pI-cDq" id="eNp-zz-gBG"/>
                         <outlet property="userNameView" destination="ge5-Xx-OwT" id="2So-UY-yyg"/>
+                        <segue destination="kx9-FR-F82" kind="show" identifier="logOutUser" id="Rm9-nf-GTK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-520.28985507246375" y="-625.44642857142856"/>
+            <point key="canvasLocation" x="-580" y="-1098"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="qyu-KG-I22">

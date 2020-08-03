@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class TimerViewController: UIViewController {
     
@@ -47,6 +48,20 @@ class TimerViewController: UIViewController {
         } else{
             userNameView.text = username
             self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
+    @IBAction func logOutUser(_ sender: Any) {
+        firebaseLogOut()
+        self.performSegue(withIdentifier: "logOutUser", sender: nil)
+    }
+    
+    private func firebaseLogOut(){
+         let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
         }
     }
     
