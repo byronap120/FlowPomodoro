@@ -52,11 +52,20 @@
                                     <action selector="guestMode:" destination="s22-fd-1lz" eventType="touchUpInside" id="eG3-d6-v5t"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KWF-oU-sA8">
+                                <rect key="frame" x="155" y="297" width="104" height="30"/>
+                                <state key="normal" title="FacebookLogin"/>
+                                <connections>
+                                    <action selector="facebookLogin:" destination="s22-fd-1lz" eventType="touchUpInside" id="pe4-c3-Zat"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="OIr-V5-aJP" firstAttribute="leading" secondItem="5yz-8W-cZj" secondAttribute="leading" constant="152" id="AYb-sx-BlT"/>
+                            <constraint firstItem="5yz-8W-cZj" firstAttribute="trailing" secondItem="KWF-oU-sA8" secondAttribute="trailing" constant="155" id="BT6-gJ-PfU"/>
                             <constraint firstItem="gBe-dn-Pgv" firstAttribute="leading" secondItem="5yz-8W-cZj" secondAttribute="leading" constant="168" id="OCt-sy-nCY"/>
+                            <constraint firstItem="KWF-oU-sA8" firstAttribute="top" secondItem="gBe-dn-Pgv" secondAttribute="bottom" constant="30" id="V3y-dN-2YD"/>
                             <constraint firstItem="5yz-8W-cZj" firstAttribute="trailing" secondItem="jvu-6f-kW7" secondAttribute="trailing" constant="165" id="a3I-8n-2TX"/>
                             <constraint firstItem="jvu-6f-kW7" firstAttribute="top" secondItem="OIr-V5-aJP" secondAttribute="bottom" constant="21" id="g8t-Dc-dSR"/>
                             <constraint firstItem="5yz-8W-cZj" firstAttribute="trailing" secondItem="OIr-V5-aJP" secondAttribute="trailing" constant="151" id="gRk-oS-3Gt"/>
@@ -65,6 +74,7 @@
                             <constraint firstItem="jvu-6f-kW7" firstAttribute="leading" secondItem="5yz-8W-cZj" secondAttribute="leading" constant="166" id="miu-l9-nrV"/>
                             <constraint firstItem="OIr-V5-aJP" firstAttribute="top" secondItem="5yz-8W-cZj" secondAttribute="top" constant="47" id="uaA-IN-e7c"/>
                             <constraint firstItem="OIr-V5-aJP" firstAttribute="top" secondItem="5yz-8W-cZj" secondAttribute="top" constant="47" id="yfA-VH-7EQ"/>
+                            <constraint firstItem="KWF-oU-sA8" firstAttribute="leading" secondItem="5yz-8W-cZj" secondAttribute="leading" constant="155" id="z3e-ha-QJ5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5yz-8W-cZj"/>
                     </view>
@@ -194,6 +204,7 @@
                         <outlet property="taskNameTextField" destination="YSv-iR-9VL" id="aUo-hQ-cvx"/>
                         <outlet property="timerButton" destination="nuD-nC-FBQ" id="2fG-p5-bHv"/>
                         <outlet property="userInfoView" destination="s3M-pI-cDq" id="eNp-zz-gBG"/>
+                        <outlet property="userNameView" destination="ge5-Xx-OwT" id="2So-UY-yyg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -248,7 +259,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lMU-rK-3Ae"/>
+        <segue reference="J6u-gy-Qeh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="clock" catalog="system" width="128" height="121"/>

@@ -150,6 +150,7 @@
 				9E54C97624CCD99000A17E2F /* Frameworks */,
 				9E54C97724CCD99000A17E2F /* Resources */,
 				F31F738B50A92258F9985DF0 /* [CP] Embed Pods Frameworks */,
+				F4FA8CC2A0F130689CA4443B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -245,6 +246,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlowPomodoro/Pods-FlowPomodoro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F4FA8CC2A0F130689CA4443B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlowPomodoro/Pods-FlowPomodoro-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FlowPomodoro/Pods-FlowPomodoro-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FlowPomodoro/Pods-FlowPomodoro-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

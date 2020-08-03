@@ -10,5 +10,8 @@ target 'FlowPomodoro' do
   # Add the Firebase pod for Google Analytics
   pod 'Firebase/Analytics'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
+  pod 'FBSDKLoginKit'
 
 end

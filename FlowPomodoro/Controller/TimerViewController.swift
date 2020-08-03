@@ -23,6 +23,7 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var timerButton: UIButton!
     @IBOutlet weak var taskNameTextField: UITextField!
     @IBOutlet weak var userInfoView: UIStackView!
+    @IBOutlet weak var userNameView: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class TimerViewController: UIViewController {
         if(username.isEmpty){
             userInfoView.isHidden = true
         } else{
+            userNameView.text = username
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
