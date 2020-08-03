@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TimerViewController.swift
 //  FlowPomodoro
 //
 //  Created by Byron Ajin on 7/25/20.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TimerViewController: UIViewController {
     
+    var username = ""
     private var lastDate: Date?
     private var timeElapsedInSeconds: Int = 0
     private var timerActive = false
@@ -21,14 +22,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var clockDisplay: UILabel!
     @IBOutlet weak var timerButton: UIButton!
     @IBOutlet weak var taskNameTextField: UITextField!
+    @IBOutlet weak var userInfoView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         intializeLifeCycleObservers()
+        initializeUserInformation()
         intializeProgressView()
         updateTimerMode(mode: TimerContants.focusMode)
         edittingGesture()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func initializeUserInformation(){
+        if(username.isEmpty){
+            userInfoView.isHidden = true
+        } else{
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
     }
     
     private func edittingGesture(){
