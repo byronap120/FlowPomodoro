@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 import GoogleSignIn
 import FBSDKLoginKit
 
@@ -17,37 +16,19 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().delegate = self
-        
-        let user = Auth.auth().currentUser
-        if user != nil {
-           userIsAuthenticated()
-        }
+        checkUserAuthState()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "authUser" {
             if let tabController = segue.destination as? UITabBarController {
-                let timerViewController = tabController.viewControllers?.first as! TimerViewController
-                let username = sender as! String
-                timerViewController.username = username
-            }
-        }
-    }
-    
-    @IBAction func facebookLogin(_ sender: Any) {
-        let loginManager = LoginManager()
-        loginManager.logOut()
-        loginManager.logIn(permissions: ["email"], from: self) { (result, error) in
-            if (error != nil) {
-                return
-            }
-            let credential = FacebookAuthProvider.credential(withAccessToken: result?.token?.tokenString ?? "")
-            Auth.auth().signIn(with: credential) { (authResult, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    self.userIsAuthenticated()
-                }
+                let user = sender as! User
+                
+                let timerViewController = tabController.viewControllers?[0] as! TimerViewController
+                timerViewController.user = user
+                
+                let taskTableViewController = tabController.viewControllers?[1] as! TaskTableViewController
+                taskTableViewController.user = user
             }
         }
     }
@@ -64,28 +45,40 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         self.performSegue(withIdentifier: "showTimer", sender: nil)
     }
     
-    
+    @IBAction func facebookLogin(_ sender: Any) {
+        let loginManager = LoginManager()
+        loginManager.logOut()
+        loginManager.logIn(permissions: ["email"], from: self) { (result, error) in
+            if (error != nil) {
+                return
+            }
+            FirebaseAPI.signInWithFacebook(accessToken: result?.token?.tokenString ?? "", completionHandler: self.userSignInHandler(success:error:))
+        }
+    }
+        
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             print(error.localizedDescription)
             return
         }
         guard let auth = user.authentication else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
-        Auth.auth().signIn(with: credentials) { (authResult, error) in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("Login Successful")
-                self.userIsAuthenticated()
+        FirebaseAPI.signInWithGoogle(idToken: auth.idToken, accessToken: auth.accessToken, completionHandler: self.userSignInHandler(success:error:))
+    }
+    
+    private func userSignInHandler(success: Bool, error: Error?) {
+        if(success) {
+            checkUserAuthState()
+        } else {
+            if let errorMessage = error?.localizedDescription {
+                showAlertMessage(title: "Error", message: errorMessage)
             }
         }
     }
     
-    private func userIsAuthenticated(){
-        let user = Auth.auth().currentUser
-        self.performSegue(withIdentifier: "authUser", sender: user?.displayName)
+    private func checkUserAuthState(){
+        if let user = FirebaseAPI.isUserAuthenticated() {
+            self.performSegue(withIdentifier: "authUser", sender: user)
+        }
     }
-    
     
 }

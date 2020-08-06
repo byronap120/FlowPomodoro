@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class TimerViewController: UIViewController {
     
-    var username = ""
+    var user: User?
     private var lastDate: Date?
     private var timeElapsedInSeconds: Int = 0
     private var timerActive = false
@@ -36,33 +35,18 @@ class TimerViewController: UIViewController {
         edittingGesture()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
     private func initializeUserInformation(){
-        if(username.isEmpty){
-            userInfoView.isHidden = true
-        } else{
-            userNameView.text = username
+        if(user != nil) {
+            userNameView.text = user?.userName
             self.navigationController?.setNavigationBarHidden(true, animated: true)
+        } else {
+            userInfoView.isHidden = true
         }
     }
     
     @IBAction func logOutUser(_ sender: Any) {
-        firebaseLogOut()
+        FirebaseAPI.userSignOut()
         self.performSegue(withIdentifier: "logOutUser", sender: nil)
-    }
-    
-    private func firebaseLogOut(){
-         let firebaseAuth = Auth.auth()
-        do {
-          try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-          print ("Error signing out: %@", signOutError)
-        }
     }
     
     private func edittingGesture(){
@@ -113,8 +97,6 @@ class TimerViewController: UIViewController {
         let diffComponents = Calendar.current.dateComponents([.minute, .second], from: lastDate!, to: date)
         let seconds = diffComponents.second
         
-        print("difference2: \(seconds)")
-        
         self.timeElapsedInSeconds += seconds ?? 0
         if self.timeElapsedInSeconds > self.timerMode!.timer {
             self.timeElapsedInSeconds = self.timerMode!.timer
@@ -131,10 +113,23 @@ class TimerViewController: UIViewController {
                 self.updateUITimer()
                 if self.timeElapsedInSeconds >= self.timerMode!.timer {
                     timer.invalidate()
+                    self.saveToFirebase()
                     self.moveToNextMode()
                 }
             }
             timerActive = true
+        }
+    }
+
+    private func saveToFirebase() {
+        if let userId = user?.userId {
+            let taskName = taskNameTextField.text ?? "FocusTime"
+            let mode = "mode:\(String(describing: timerMode?.currentMode))"
+            FirebaseAPI.saveTaskToFirebase(userId: userId,
+                                           task: Task(name: taskName,
+                                                      mode: mode,
+                                                      seconds: self.timeElapsedInSeconds,
+                                                      date: Date()))
         }
     }
     
@@ -165,6 +160,7 @@ class TimerViewController: UIViewController {
     
     private func confirmCancelTimer(){
         timer.invalidate()
+        saveToFirebase()
         updateTimerMode(mode: TimerContants.focusMode)
     }
     
