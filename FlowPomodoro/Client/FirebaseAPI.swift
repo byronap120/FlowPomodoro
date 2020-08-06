@@ -62,28 +62,35 @@ class FirebaseAPI {
         }
     }
     
-    class func getTaskForUser(userId: String) -> [String]{
-        var newTaskList = [String]()
+    class func getTaskForUser(userId: String, completionHandler: @escaping ([Task], Error?) -> Void) {
+        var newTaskList = [Task]()
         let db = Firestore.firestore()
         db.collection(userId).order(by: "date", descending: true).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
+            if let error = err {
+                completionHandler(newTaskList, error)
             } else {
                 for document in querySnapshot!.documents {
                     let date = document.data()["date"] as? Timestamp
                     let taskName = document.data()["taskName"] as? String
+                    let taskMode = document.data()["taskMode"] as? String
+                    let taskSeconds = document.data()["timer"] as? Int
                     
-                    let dateTemp: Date = date?.dateValue() ?? Date()
-                    let dateformat = DateFormatter()
-                    dateformat.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let dateString = dateformat.string(from: dateTemp)
-                    let temp =  (taskName ??  "") + dateString
-                    newTaskList.append(temp)
+                    //                    let dateTemp: Date = date?.dateValue() ?? Date()
+                    //                    let dateformat = DateFormatter()
+                    //                    dateformat.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    //                    let dateString = dateformat.string(from: dateTemp)
+                    //                    let temp =  (taskName ??  "") + dateString
+                    
+                    let task = Task(name: taskName ?? "",
+                                    mode: taskMode ?? "",
+                                    seconds: taskSeconds ?? 0,
+                                    date: date?.dateValue() ?? Date())
+                    
+                    newTaskList.append(task)
                 }
+                completionHandler(newTaskList, nil)
             }
         }
-        //TODO: Async
-        return newTaskList
     }
     
     

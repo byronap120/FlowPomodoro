@@ -11,7 +11,7 @@ import UIKit
 class TaskTableViewController: UIViewController , UITableViewDataSource, UITableViewDelegate {
     
     var user: User?
-    private var taskList = [String]()
+    private var taskList = [Task]()
     
     @IBOutlet weak var taskTableView: UITableView!
     
@@ -27,8 +27,17 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
     
     private func getInfoFromFirebase(){
         if let userId = user?.userId {
-            taskList = FirebaseAPI.getTaskForUser(userId: userId)
+            FirebaseAPI.getTaskForUser(userId: userId, completionHandler: taskListHandler(remoteTaskList:error:))
         }
+    }
+    
+     private func taskListHandler(remoteTaskList: [Task], error: Error?) {
+        if error != nil {
+            showAlertMessage(title: "Error", message: error!.localizedDescription)
+            return
+        }
+        taskList = remoteTaskList
+        taskTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,7 +47,7 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = taskList[(indexPath as NSIndexPath).row]
         let taskViewCell = tableView.dequeueReusableCell(withIdentifier: "TaskViewCell") as! TaskTableViewCell
-        taskViewCell.taskNameLabel.text = "\(task)"
+        taskViewCell.taskNameLabel.text = "\(task.name)"
         return taskViewCell
     }
     
