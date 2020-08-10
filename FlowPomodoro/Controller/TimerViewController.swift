@@ -108,6 +108,8 @@ class TimerViewController: UIViewController {
         if(timerActive) {
             showAlertToUser()
         } else {
+            timerActive = true
+            self.updateUITimer()
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 self.timeElapsedInSeconds += 1
                 self.updateUITimer()
@@ -117,10 +119,9 @@ class TimerViewController: UIViewController {
                     self.moveToNextMode()
                 }
             }
-            timerActive = true
         }
     }
-
+    
     private func saveToFirebase() {
         if let userId = user?.userId {
             let taskName = taskNameTextField.text ?? "FocusTime"
@@ -176,7 +177,7 @@ class TimerViewController: UIViewController {
         let currentTimer = self.timerMode!.timer
         progressView.updateValues(currentAmount: CGFloat(self.timeElapsedInSeconds), totalAmount: CGFloat(currentTimer - self.timeElapsedInSeconds))
         updateNumericTimerFrom(seconds: self.timeElapsedInSeconds)
-        
+        updateUIBackground()
     }
     
     private func updateNumericTimerFrom(seconds: Int){
@@ -204,6 +205,29 @@ class TimerViewController: UIViewController {
             taskNameTextField.isEnabled = false
             taskNameTextField.text = "REST TIME!"
         }
+    }
+    
+    private func updateUIBackground(){
+        var clockBackgroundAsset = ""
+        var buttonBackgroundAsset = ""
+        if(timerMode?.currentMode == TimerContants.focusMode) {
+            clockBackgroundAsset = "clock_background_orange"
+            if(timerActive) {
+                buttonBackgroundAsset = "stop_button_orange"
+            } else {
+                buttonBackgroundAsset = "play_button_orange"
+            }
+        } else {
+            clockBackgroundAsset = "clock_background_blue"
+            if(timerActive) {
+                buttonBackgroundAsset = "stop_button_blue"
+            } else {
+                buttonBackgroundAsset = "play_button_blue"
+            }
+            
+        }
+        clockBackground.image = UIImage(named: clockBackgroundAsset)
+        timerButton.setBackgroundImage(UIImage(named: buttonBackgroundAsset), for: UIControl.State.normal)
     }
     
 }

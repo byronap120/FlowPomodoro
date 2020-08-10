@@ -54,7 +54,7 @@ class ProgressView : UIView {
         let ctx = UIGraphicsGetCurrentContext()
         
         // radius is the half the frame's width or height (whichever is smallest)
-        let radius = (min(frame.size.width, frame.size.height) * 0.5) - 4
+        let radius = (min(frame.size.width, frame.size.height) * 0.5)
         
         
         // center of the view
@@ -93,7 +93,7 @@ class ProgressView : UIView {
         
         // Color
         // set fill color to the segment color
-        ctx?.setFillColor(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1))
+        ctx?.setFillColor(#colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1))
         
         // update the end angle of the segment
         let endAngle2 = startAngle + (2 * .pi * (totalAmount / CGFloat(valueCount)))
