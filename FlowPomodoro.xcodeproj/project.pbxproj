@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4865055CCA0150277233315C /* Pods_FlowPomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF5D52C70F6682D63CF167F /* Pods_FlowPomodoro.framework */; };
 		9E354F7F24D7DFE800A2F89D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E354F7E24D7DFE800A2F89D /* User.swift */; };
+		9E4BBB7224E51B790005CEA1 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4BBB7124E51B790005CEA1 /* UIImageView+Extensions.swift */; };
 		9E51254C24E4C920007159CF /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E51254B24E4C920007159CF /* Int+Extensions.swift */; };
 		9E54C97D24CCD99000A17E2F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54C97C24CCD99000A17E2F /* AppDelegate.swift */; };
 		9E54C97F24CCD99000A17E2F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E54C97E24CCD99000A17E2F /* SceneDelegate.swift */; };
@@ -33,6 +34,7 @@
 		38F5FB012520B9312DC26AB6 /* Pods-FlowPomodoro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowPomodoro.debug.xcconfig"; path = "Target Support Files/Pods-FlowPomodoro/Pods-FlowPomodoro.debug.xcconfig"; sourceTree = "<group>"; };
 		3DF5D52C70F6682D63CF167F /* Pods_FlowPomodoro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowPomodoro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E354F7E24D7DFE800A2F89D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9E4BBB7124E51B790005CEA1 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		9E51254B24E4C920007159CF /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		9E54C97924CCD99000A17E2F /* FlowPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E54C97C24CCD99000A17E2F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				9E51254B24E4C920007159CF /* Int+Extensions.swift */,
+				9E4BBB7124E51B790005CEA1 /* UIImageView+Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				9E54C98724CCD99000A17E2F /* FlowPomodoro.xcdatamodeld in Sources */,
 				9EE846A324DBC35E00B54E7E /* UIViewController+Extensions.swift in Sources */,
 				9E8CC1B624DA607100821ADB /* TaskTableViewCell.swift in Sources */,
+				9E4BBB7224E51B790005CEA1 /* UIImageView+Extensions.swift in Sources */,
 				9ED742DF24D22F5A009A8E51 /* TimerMode.swift in Sources */,
 				9EE846A124DBB63A00B54E7E /* Task.swift in Sources */,
 				9E54C98124CCD99000A17E2F /* TimerViewController.swift in Sources */,

@@ -22,8 +22,9 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var clockDisplay: UILabel!
     @IBOutlet weak var timerButton: UIButton!
     @IBOutlet weak var taskNameTextField: UITextField!
-    @IBOutlet weak var userInfoView: UIStackView!
     @IBOutlet weak var userNameView: UILabel!
+    @IBOutlet weak var userInfoView: UIView!
+    @IBOutlet weak var userImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class TimerViewController: UIViewController {
     private func initializeUserInformation(){
         if(user != nil) {
             userNameView.text = user?.userName
+            userImageView.setProfileImage(imageUrl: user!.userPhotoUrl)
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
             userInfoView.isHidden = true
@@ -186,17 +188,7 @@ class TimerViewController: UIViewController {
     
     private func updateNumericTimerFrom(seconds: Int){
         let remainingTime = timerMode!.timer - seconds
-        
-//        let minutesFormatted = (remainingTime % 3600) / 60
-//        let secondsFormatted = (remainingTime % 3600) % 60
-//        let formattedTime = String(format: "%0.2d:%0.2d",  minutesFormatted, secondsFormatted)
-//
         clockDisplay.text = remainingTime.getFormattedTimer()
-        //print("Formated timer2-> \(formattedTime)")
-    }
-    
-    private func updateButtonConfiguration() {
-        
     }
     
     private func updateTimerTitle(){

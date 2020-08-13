@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TaskTableViewController: UIViewController , UITableViewDataSource, UITableViewDelegate {
     
@@ -14,6 +15,9 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
     private var taskList = [Task]()
     
     @IBOutlet weak var taskTableView: UITableView!
+    @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +28,17 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        progressIndicator.startAnimating()
+        progressIndicator.isHidden = false
+        initializeUserInformation()
         getInfoFromFirebase()
+    }
+    
+    private func initializeUserInformation(){
+        if(user != nil) {
+            userImageView.setProfileImage(imageUrl: user!.userPhotoUrl)            
+            userNameLabel.text = user?.userName
+        }
     }
     
     private func getInfoFromFirebase(){
@@ -33,12 +47,14 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
         }
     }
     
-     private func taskListHandler(remoteTaskList: [Task], error: Error?) {
+    private func taskListHandler(remoteTaskList: [Task], error: Error?) {
         if error != nil {
             showAlertMessage(title: "Error", message: error!.localizedDescription)
             return
         }
         taskList = remoteTaskList
+        progressIndicator.stopAnimating()
+        progressIndicator.isHidden = true
         taskTableView.reloadData()
     }
     
@@ -68,7 +84,7 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
         } else {
             taskViewCell.timerImageView.image = UIImage(named: "rest_icon")
         }
-         
+        
         return taskViewCell
     }
     
@@ -84,29 +100,4 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
         }
         return name
     }
-        
-    
-//    private func updateUIBackground(){
-//        var clockBackgroundAsset = ""
-//        var buttonBackgroundAsset = ""
-//        if(timerMode?.currentMode == TimerContants.focusMode) {
-//            clockBackgroundAsset = "clock_background_orange"
-//            if(timerActive) {
-//                buttonBackgroundAsset = "stop_button_orange"
-//            } else {
-//                buttonBackgroundAsset = "play_button_orange"
-//            }
-//        } else {
-//            clockBackgroundAsset = "clock_background_blue"
-//            if(timerActive) {
-//                buttonBackgroundAsset = "stop_button_blue"
-//            } else {
-//                buttonBackgroundAsset = "play_button_blue"
-//            }
-//
-//        }
-//        clockBackground.image = UIImage(named: clockBackgroundAsset)
-//        timerButton.setBackgroundImage(UIImage(named: buttonBackgroundAsset), for: UIControl.State.normal)
-//    }
-    
 }
