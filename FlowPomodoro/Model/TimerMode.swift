@@ -10,7 +10,7 @@ import Foundation
 
 
 enum TimerContants{
-    static let focusTime = 60 * 20
+    static let focusTime = 60 * 2
     static let restTime = 60 * 1
     static let focusMode = 0
     static let restMode = 1

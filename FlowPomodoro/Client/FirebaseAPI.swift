@@ -72,17 +72,10 @@ class FirebaseAPI {
                 for document in querySnapshot!.documents {
                     let date = document.data()["date"] as? Timestamp
                     let taskName = document.data()["taskName"] as? String
-                    let taskMode = document.data()["taskMode"] as? String
+                    let taskMode = document.data()["timerMode"] as? Int
                     let taskSeconds = document.data()["timer"] as? Int
-                    
-                    //                    let dateTemp: Date = date?.dateValue() ?? Date()
-                    //                    let dateformat = DateFormatter()
-                    //                    dateformat.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    //                    let dateString = dateformat.string(from: dateTemp)
-                    //                    let temp =  (taskName ??  "") + dateString
-                    
                     let task = Task(name: taskName ?? "",
-                                    mode: taskMode ?? "",
+                                    mode: taskMode ?? 0,
                                     seconds: taskSeconds ?? 0,
                                     date: date?.dateValue() ?? Date())
                     

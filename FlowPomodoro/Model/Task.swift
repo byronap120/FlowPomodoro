@@ -10,7 +10,7 @@ import Foundation
 
 struct Task {
     let name: String
-    let mode: String
+    let mode: Int
     let seconds: Int
     let date: Date
 }

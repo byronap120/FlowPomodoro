@@ -68,7 +68,7 @@ class TimerViewController: UIViewController {
     }
     
     private func intializeProgressView(){
-        progressView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        progressView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
         clockBackground.addSubview(progressView)
     }
     
@@ -124,8 +124,12 @@ class TimerViewController: UIViewController {
     
     private func saveToFirebase() {
         if let userId = user?.userId {
-            let taskName = taskNameTextField.text ?? "FocusTime"
-            let mode = "mode:\(String(describing: timerMode?.currentMode))"
+            var taskName: String = taskNameTextField.text ?? "Unnamed Task"
+            if(taskName.isEmpty){
+                taskName = "Unnamed Task"
+            }
+            
+            let mode = timerMode?.currentMode ?? 0
             FirebaseAPI.saveTaskToFirebase(userId: userId,
                                            task: Task(name: taskName,
                                                       mode: mode,
@@ -183,12 +187,12 @@ class TimerViewController: UIViewController {
     private func updateNumericTimerFrom(seconds: Int){
         let remainingTime = timerMode!.timer - seconds
         
-        let minutesFormatted = (remainingTime % 3600) / 60
-        let secondsFormatted = (remainingTime % 3600) % 60
-        let formattedTime = String(format: "%0.2d:%0.2d",  minutesFormatted, secondsFormatted)
-        
-        clockDisplay.text = formattedTime
-        print("Formated timer2-> \(formattedTime)")
+//        let minutesFormatted = (remainingTime % 3600) / 60
+//        let secondsFormatted = (remainingTime % 3600) % 60
+//        let formattedTime = String(format: "%0.2d:%0.2d",  minutesFormatted, secondsFormatted)
+//
+        clockDisplay.text = remainingTime.getFormattedTimer()
+        //print("Formated timer2-> \(formattedTime)")
     }
     
     private func updateButtonConfiguration() {
