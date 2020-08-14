@@ -12,8 +12,16 @@ import FBSDKLoginKit
 
 class SignInViewController: UIViewController, GIDSignInDelegate {
     
+    @IBOutlet weak var googleLoginButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        googleLoginButton.imageView?.contentMode = .scaleAspectFit
+        facebookLoginButton.imageView?.contentMode = .scaleAspectFit
+        
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().delegate = self
         checkUserAuthState()
