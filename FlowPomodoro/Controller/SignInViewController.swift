@@ -17,14 +17,17 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
         googleLoginButton.imageView?.contentMode = .scaleAspectFit
         facebookLoginButton.imageView?.contentMode = .scaleAspectFit
         
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance().delegate = self
         checkUserAuthState()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,7 +66,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
             FirebaseAPI.signInWithFacebook(accessToken: result?.token?.tokenString ?? "", completionHandler: self.userSignInHandler(success:error:))
         }
     }
-        
+    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             print(error.localizedDescription)

@@ -43,6 +43,7 @@ class TimerViewController: UIViewController {
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
             userInfoView.isHidden = true
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
         }
     }
     
