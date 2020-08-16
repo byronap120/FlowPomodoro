@@ -10,14 +10,6 @@ import UIKit
 
 class TimerViewController: UIViewController {
     
-    var user: User?
-    private var lastDate: Date?
-    private var timeElapsedInSeconds: Int = 0
-    private var timerActive = false
-    private let progressView = ProgressView()
-    private var timerMode: TimerMode?
-    private var timer = Timer()
-    
     @IBOutlet weak var clockBackground: UIImageView!
     @IBOutlet weak var clockDisplay: UILabel!
     @IBOutlet weak var timerButton: UIButton!
@@ -26,9 +18,24 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var userInfoView: UIView!
     @IBOutlet weak var userImageView: UIImageView!
     
+    var user: User?
+    private var lastDate: Date?
+    private var timeElapsedInSeconds: Int = 0
+    private var timerActive = false
+    private var timerChangedOnSettings = false
+    private let circularProgressView = CircularProgressView()
+    private var timerMode: TimerMode?
+    private var timer = Timer()
+    private let focusModeHint = "Add Task Name"
+    private let restModeTitle = "REST TIME"
+    private let alertTitleCancel = "Are you sure you want to cancel your focus time?"
+    private let alertTitleSkip = "Are you sure you want to skip your rest time?"
+    private let alertConfirm = "Confirm"
+    private let alertCancel = "Cancel"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         intializeLifeCycleObservers()
         initializeUserInformation()
         intializeProgressView()
@@ -36,75 +43,16 @@ class TimerViewController: UIViewController {
         edittingGesture()
     }
     
-    private func initializeUserInformation(){
-        if(user != nil) {
-            userNameView.text = user?.userName
-            userImageView.setProfileImage(imageUrl: user!.userPhotoUrl)
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-        } else {
-            userInfoView.isHidden = true
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSettings"{
+            let settingsVC = segue.destination as! SettingsViewController
+            settingsVC.callback = timeWasChangeOnSettings
         }
     }
     
     @IBAction func logOutUser(_ sender: Any) {
         FirebaseAPI.userSignOut()
         self.performSegue(withIdentifier: "logOutUser", sender: nil)
-    }
-    
-    private func edittingGesture(){
-        let tap  = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-    }
-    
-    private func updateTimerMode(mode: Int){
-        if(mode == TimerContants.focusMode) {
-            timerMode = TimerMode(timer: TimerContants.focusTime, currentMode: TimerContants.focusMode)
-        } else {
-            timerMode = TimerMode(timer: TimerContants.restTime, currentMode: TimerContants.restMode)
-        }
-        
-        timerActive = false
-        timeElapsedInSeconds = 0
-        updateTimerTitle()
-        updateUITimer()
-    }
-    
-    private func intializeProgressView(){
-        progressView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        clockBackground.addSubview(progressView)
-    }
-    
-    private func intializeLifeCycleObservers() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
-        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-    }
-    
-    @objc func appMovedToBackground() {
-        print("app enters background")
-        lastDate = Date()
-    }
-    
-    @objc func appCameToForeground() {
-        print("app enters foreground")
-        updateTimer()
-    }
-    
-    private func updateTimer(){
-        guard  lastDate != nil else {
-            return
-        }
-        let date = Date()
-        let diffComponents = Calendar.current.dateComponents([.minute, .second], from: lastDate!, to: date)
-        let seconds = diffComponents.second
-        
-        self.timeElapsedInSeconds += seconds ?? 0
-        if self.timeElapsedInSeconds > self.timerMode!.timer {
-            self.timeElapsedInSeconds = self.timerMode!.timer
-        }
-        updateUITimer()
     }
     
     @IBAction func startTimer(_ sender: Any) {
@@ -125,16 +73,89 @@ class TimerViewController: UIViewController {
         }
     }
     
+    @IBAction func openSettingsScreen(_ sender: Any) {
+        self.performSegue(withIdentifier: "showSettings", sender: nil)
+    }
+    
+    private func timeWasChangeOnSettings(updated: Bool){
+        if(timerActive) {
+            return
+        } else {
+            updateTimerMode(mode: timerMode!.currentMode)
+        }
+    }
+    
+    private func initializeUserInformation(){
+        if(user != nil) {
+            userNameView.text = user?.userName
+            userImageView.setProfileImage(imageUrl: user!.userPhotoUrl)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        } else {
+            userInfoView.isHidden = true
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+        }
+    }
+    
+    private func edittingGesture(){
+        let tap  = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
+    
+    private func updateTimerMode(mode: Int){
+        if(mode == TimerContants.focusMode) {
+            timerMode = TimerMode(mode: TimerContants.focusMode)
+        } else {
+            timerMode = TimerMode(mode: TimerContants.restMode)
+        }
+        
+        timerActive = false
+        timeElapsedInSeconds = 0
+        updateTimerTitle()
+        updateUITimer()
+    }
+    
+    private func intializeProgressView(){
+        circularProgressView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
+        clockBackground.addSubview(circularProgressView)
+    }
+    
+    private func intializeLifeCycleObservers() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc private func appMovedToBackground() {
+        print("appMovedToBackground")
+        lastDate = Date()
+    }
+    
+    @objc private func appCameToForeground() {
+        print("appCameToForeground")
+        updateTimer()
+    }
+    
+    private func updateTimer(){
+        if(lastDate == nil || timerActive == false) {
+            return
+        }
+        
+        let date = Date()
+        let diffComponents = Calendar.current.dateComponents([.minute, .second], from: lastDate!, to: date)
+        let seconds = diffComponents.second
+        self.timeElapsedInSeconds += seconds ?? 0
+        if self.timeElapsedInSeconds > self.timerMode!.timer {
+            self.timeElapsedInSeconds = self.timerMode!.timer
+        }
+        updateUITimer()
+    }
+    
     private func saveToFirebase() {
         if let userId = user?.userId {
-            var taskName: String = taskNameTextField.text ?? "Unnamed Task"
-            if(taskName.isEmpty){
-                taskName = "Unnamed Task"
-            }
-            
             let mode = timerMode?.currentMode ?? 0
             FirebaseAPI.saveTaskToFirebase(userId: userId,
-                                           task: Task(name: taskName,
+                                           task: Task(name: taskNameTextField.text ?? "",
                                                       mode: mode,
                                                       seconds: self.timeElapsedInSeconds,
                                                       date: Date()))
@@ -144,22 +165,22 @@ class TimerViewController: UIViewController {
     private func showAlertToUser(){
         var title = ""
         if(timerMode?.currentMode == TimerContants.focusMode) {
-            title = "Are you sure you want to cancel your focus time?"
+            title = alertTitleCancel
         } else {
-            title = "Are you sure you want to skip your rest time?"
+            title = alertTitleSkip
         }
         
         let alert = UIAlertController(title: title,
                                       message: "",
                                       preferredStyle: .alert)
         
-        let saveAction = UIAlertAction(title: "Confirm",
+        let saveAction = UIAlertAction(title: alertConfirm,
                                        style: .default) {
                                         action in
                                         self.confirmCancelTimer()
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel",
+        let cancelAction = UIAlertAction(title: alertCancel,
                                          style: .cancel)
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
@@ -182,7 +203,7 @@ class TimerViewController: UIViewController {
     
     private func updateUITimer(){
         let currentTimer = self.timerMode!.timer
-        progressView.updateValues(currentAmount: CGFloat(self.timeElapsedInSeconds), totalAmount: CGFloat(currentTimer - self.timeElapsedInSeconds))
+        circularProgressView.updateValues(currentAmount: CGFloat(self.timeElapsedInSeconds), totalAmount: CGFloat(currentTimer - self.timeElapsedInSeconds))
         updateNumericTimerFrom(seconds: self.timeElapsedInSeconds)
         updateUIBackground()
     }
@@ -196,11 +217,11 @@ class TimerViewController: UIViewController {
         if(timerMode?.currentMode == TimerContants.focusMode) {
             taskNameTextField.text = ""
             taskNameTextField.isEnabled = true
-            taskNameTextField.attributedPlaceholder = NSAttributedString(string: "Add Task Name",
+            taskNameTextField.attributedPlaceholder = NSAttributedString(string: focusModeHint,
                                                                          attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)])
         } else {
             taskNameTextField.isEnabled = false
-            taskNameTextField.text = "REST TIME!"
+            taskNameTextField.text = restModeTitle
         }
     }
     

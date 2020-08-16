@@ -8,18 +8,8 @@
 
 import Foundation
 
-enum SignInMethod {
-    static let firebase = 2
-    static let guest = 2
-}
-
 struct User {
     var userId: String = ""
     var userName: String = ""
     var userPhotoUrl: String = ""
-    var signInMethod: Int = SignInMethod.guest
-    
-    func isGuestUser() -> Bool {
-        return signInMethod == SignInMethod.guest
-    }
 }

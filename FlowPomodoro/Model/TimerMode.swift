@@ -10,8 +10,8 @@ import Foundation
 
 
 enum TimerContants{
-    static let focusTime = 60 * 2
-    static let restTime = 60 * 1
+    static let focusTimeDefaultMinutes = 5
+    static let restTimeDefaultMinutes = 1
     static let focusMode = 0
     static let restMode = 1
 }
@@ -19,4 +19,25 @@ enum TimerContants{
 struct TimerMode {
     let timer: Int
     let currentMode: Int
+    
+    init(mode:Int) {
+        currentMode = mode
+        if(mode == TimerContants.focusMode) {
+            timer = getFocusTime() * 60
+        } else {
+            timer = getRestTime() * 60
+        }
+    }
+}
+
+private func getFocusTime() -> Int{
+    let defaults = UserDefaults.standard
+    let focusTimer = defaults.object(forKey:"focusTimerKey") as? Int ?? TimerContants.focusTimeDefaultMinutes
+    return focusTimer
+}
+
+private func getRestTime() -> Int{
+    let defaults = UserDefaults.standard
+    let focusTimer = defaults.object(forKey:"restTimerKey") as? Int ?? TimerContants.restTimeDefaultMinutes
+    return focusTimer
 }

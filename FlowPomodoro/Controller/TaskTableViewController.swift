@@ -18,11 +18,11 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var emptyView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
         taskTableView.separatorStyle = .none
     }
     
@@ -32,6 +32,11 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
         progressIndicator.isHidden = false
         initializeUserInformation()
         getInfoFromFirebase()
+    }
+    
+    @IBAction func logOutUser(_ sender: Any) {
+        FirebaseAPI.userSignOut()
+        self.performSegue(withIdentifier: "logOutUser", sender: nil)
     }
     
     private func initializeUserInformation(){
@@ -52,10 +57,17 @@ class TaskTableViewController: UIViewController , UITableViewDataSource, UITable
             showAlertMessage(title: "Error", message: error!.localizedDescription)
             return
         }
-        taskList = remoteTaskList
+        
         progressIndicator.stopAnimating()
         progressIndicator.isHidden = true
-        taskTableView.reloadData()
+        
+        if remoteTaskList.isEmpty {
+            emptyView.isHidden = false
+        } else {
+            emptyView.isHidden = true
+            taskList = remoteTaskList
+            taskTableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

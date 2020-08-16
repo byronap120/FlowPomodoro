@@ -14,6 +14,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     
     @IBOutlet weak var googleLoginButton: UIButton!
     @IBOutlet weak var facebookLoginButton: UIButton!
+    @IBOutlet weak var screenLoader: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +46,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     }
     
     @IBAction func googleSignIn(_ sender: Any) {
+        screenLoader.isHidden = false
         GIDSignIn.sharedInstance().signIn()
-    }
-    
-    @IBAction func goToApp(_ sender: Any) {
-        self.performSegue(withIdentifier: "authUser", sender: "Byron")
     }
     
     @IBAction func guestMode(_ sender: Any) {
@@ -57,23 +55,16 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
     }
     
     @IBAction func facebookLogin(_ sender: Any) {
+        screenLoader.isHidden = false
         let loginManager = LoginManager()
         loginManager.logOut()
         loginManager.logIn(permissions: ["email"], from: self) { (result, error) in
             if (error != nil) {
+                self.screenLoader.isHidden = true
                 return
             }
             FirebaseAPI.signInWithFacebook(accessToken: result?.token?.tokenString ?? "", completionHandler: self.userSignInHandler(success:error:))
         }
-    }
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-        guard let auth = user.authentication else { return }
-        FirebaseAPI.signInWithGoogle(idToken: auth.idToken, accessToken: auth.accessToken, completionHandler: self.userSignInHandler(success:error:))
     }
     
     private func userSignInHandler(success: Bool, error: Error?) {
@@ -82,14 +73,24 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         } else {
             if let errorMessage = error?.localizedDescription {
                 showAlertMessage(title: "Error", message: errorMessage)
+                screenLoader.isHidden = true
             }
         }
     }
     
     private func checkUserAuthState(){
         if let user = FirebaseAPI.isUserAuthenticated() {
+            screenLoader.isHidden = true
             self.performSegue(withIdentifier: "authUser", sender: user)
         }
     }
     
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error != nil {
+            self.screenLoader.isHidden = true
+            return
+        }
+        guard let auth = user.authentication else { return }
+        FirebaseAPI.signInWithGoogle(idToken: auth.idToken, accessToken: auth.accessToken, completionHandler: self.userSignInHandler(success:error:))
+    }
 }
