@@ -27,7 +27,7 @@ class TimerViewController: UIViewController {
     private var timerMode: TimerMode?
     private var timer = Timer()
     private let focusModeHint = "Add Task Name"
-    private let restModeTitle = "REST TIME"
+    private let restModeTitle = "Break Time"
     private let alertTitleCancel = "Are you sure you want to cancel your focus time?"
     private let alertTitleSkip = "Are you sure you want to skip your rest time?"
     private let alertConfirm = "Confirm"
