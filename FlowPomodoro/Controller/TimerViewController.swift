@@ -127,12 +127,10 @@ class TimerViewController: UIViewController {
     }
     
     @objc private func appMovedToBackground() {
-        print("appMovedToBackground")
         lastDate = Date()
     }
     
     @objc private func appCameToForeground() {
-        print("appCameToForeground")
         updateTimer()
     }
     

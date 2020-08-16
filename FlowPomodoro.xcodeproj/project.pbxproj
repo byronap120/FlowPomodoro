@@ -72,13 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9E51254624E4C5A0007159CF /* Utils */ = {
+		9E51254624E4C5A0007159CF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9EE846A224DBC35E00B54E7E /* UIViewController+Extensions.swift */,
 				9E51254B24E4C920007159CF /* Int+Extensions.swift */,
 				9E4BBB7124E51B790005CEA1 /* UIImageView+Extensions.swift */,
 			);
-			path = Utils;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		9E54C97024CCD99000A17E2F = {
@@ -107,7 +108,7 @@
 				9E9D5C7424D7871700FCCFA7 /* View */,
 				9E9D5C7324D786EC00FCCFA7 /* Controller */,
 				9EB9305324E1063700241210 /* Fonts */,
-				9E51254624E4C5A0007159CF /* Utils */,
+				9E51254624E4C5A0007159CF /* Extensions */,
 				9E9D5C7224D786CD00FCCFA7 /* Storyboard */,
 				9E54C97C24CCD99000A17E2F /* AppDelegate.swift */,
 				9E54C97E24CCD99000A17E2F /* SceneDelegate.swift */,
@@ -131,10 +132,9 @@
 		9E9D5C7324D786EC00FCCFA7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9E54C98024CCD99000A17E2F /* TimerViewController.swift */,
 				9E9D5C7624D7895A00FCCFA7 /* SignInViewController.swift */,
+				9E54C98024CCD99000A17E2F /* TimerViewController.swift */,
 				9E68866524D87A020083AB66 /* TaskTableViewController.swift */,
-				9EE846A224DBC35E00B54E7E /* UIViewController+Extensions.swift */,
 				9E74A81124E8D7FA006B7B5D /* SettingsViewController.swift */,
 			);
 			path = Controller;

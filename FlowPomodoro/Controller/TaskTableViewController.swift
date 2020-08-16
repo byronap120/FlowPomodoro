@@ -10,15 +10,15 @@ import UIKit
 import Kingfisher
 
 class TaskTableViewController: UIViewController , UITableViewDataSource, UITableViewDelegate {
-    
-    var user: User?
-    private var taskList = [Task]()
-    
+        
     @IBOutlet weak var taskTableView: UITableView!
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var emptyView: UIView!
+    
+    var user: User?
+    private var taskList = [Task]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
